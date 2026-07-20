@@ -248,35 +248,8 @@ button, input { font: inherit; }
 .arrow:hover { border-color: var(--mint); background: rgba(79,224,192,.14); }
 .hint-key { position: fixed; bottom: 74px; right: 34px; z-index: 20; font-size: .68rem; color: rgba(200,228,236,.4); pointer-events: none; }
 </style>
-
-<meta name="robots" content="noindex, nofollow">
-<style>
-#authGate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#04080e;font-family:"Noto Sans TC",sans-serif}
-#authGate.hidden{display:none}
-.auth-card{width:min(420px,92vw);padding:36px 32px;border:1px solid rgba(120,230,210,.2);background:rgba(8,20,32,.95);text-align:center}
-.auth-card h2{font-family:"Noto Serif TC",serif;font-size:1.4rem;color:#eafaff;margin-bottom:8px}
-.auth-card p{font-size:.88rem;color:rgba(200,228,236,.7);margin-bottom:20px;font-weight:300}
-.auth-card input{width:100%;padding:12px 14px;border:1px solid rgba(120,230,210,.2);background:rgba(0,0,0,.35);color:#eafaff;font-size:1rem;margin-bottom:12px;outline:none}
-.auth-card input:focus{border-color:#4fe0c0}
-.auth-card button{width:100%;padding:12px;border:none;background:linear-gradient(120deg,#4fe0c0,#3aa0ff);color:#04121a;font-weight:600;font-size:.95rem;cursor:pointer}
-.auth-card .err{color:#ff8eb5;font-size:.8rem;min-height:1.2em;margin-top:10px}
-body.locked{overflow:hidden}
-body.locked .topbar,body.locked .deck,body.locked .nav,body.locked .hint-key,body.locked #bgField,body.locked .bg-veil,body.locked .grain{visibility:hidden}
-</style>
-
 </head>
-<body class="locked">
-
-<div id="authGate">
-  <div class="auth-card">
-    <h2 class="serif">智慧禪境 · 提案</h2>
-    <p>此頁僅供受邀者查閱，請輸入存取密碼。</p>
-    <input id="authInput" type="password" placeholder="請輸入密碼" autocomplete="current-password">
-    <button type="button" id="authBtn">進入提案</button>
-    <div class="err" id="authErr"></div>
-  </div>
-</div>
-
+<body>
 <canvas id="bgField"></canvas>
 <div class="bg-veil"></div>
 <div class="grain"></div>
@@ -696,22 +669,5 @@ function unlock(id) { owned.add(id); }
   render(ZONES[0]);
 })();
 </script>
-
-<script>
-(function(){
-  const HASH="388d44c1d3d0e58a20bfe57d6cb13969a219c901d7776a2b34666e2888c4b856";
-  const KEY="pv_zhihui_auth_v1";
-  const gate=document.getElementById("authGate");
-  const input=document.getElementById("authInput");
-  const err=document.getElementById("authErr");
-  function unlock(){document.body.classList.remove("locked");gate.classList.add("hidden");sessionStorage.setItem(KEY,"1");}
-  async function sha256(t){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("");}
-  async function tryAuth(){err.textContent="";const v=(input.value||"").trim();if(!v){err.textContent="請輸入密碼";return;}if(await sha256(v)===HASH){unlock();return;}err.textContent="密碼不正確，請再試一次";}
-  document.getElementById("authBtn").addEventListener("click",tryAuth);
-  input.addEventListener("keydown",e=>{if(e.key==="Enter")tryAuth();});
-  if(sessionStorage.getItem(KEY)==="1"){unlock();}else{document.body.classList.add("locked");}
-})();
-</script>
-
 </body>
 </html>
