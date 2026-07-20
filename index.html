@@ -148,6 +148,42 @@ button, input { font: inherit; }
 .palette-static .ps-lab { font-size: .78rem; color: var(--mute); }
 .palette-static .sw { width: 26px; height: 26px; border-radius: 50%; box-shadow: 0 0 14px currentColor; }
 
+/* Immersive protagonist slides */
+.slide.imm { justify-content: flex-end; padding: 0; overflow: hidden; }
+.imm-bg { position: absolute; inset: 0; background: center/cover no-repeat; transform: scale(1.02); animation: immBreathe 14s ease-in-out infinite alternate; }
+@keyframes immBreathe { from { transform: scale(1.02); } to { transform: scale(1.06); } }
+.imm-veil { position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(4,8,14,.72) 0%, rgba(4,8,14,.28) 48%, rgba(4,8,14,.55) 100%),
+    linear-gradient(180deg, rgba(4,8,14,.45) 0%, transparent 32%, rgba(4,8,14,.92) 100%); }
+.imm-veil.voice {
+  background:
+    radial-gradient(ellipse 55% 70% at 50% 42%, transparent 20%, rgba(4,8,14,.55) 70%, rgba(4,8,14,.92) 100%),
+    linear-gradient(180deg, rgba(4,8,14,.5) 0%, transparent 35%, rgba(4,8,14,.94) 100%); }
+.imm-body { position: relative; z-index: 2; padding: 0 clamp(34px, 7vw, 120px) 22px; max-width: 48rem; }
+.imm-body .kicker { margin-bottom: 12px; }
+.imm-body .s-title { text-shadow: 0 10px 40px rgba(0,0,0,.55); }
+.imm-body .s-lead { max-width: 38rem; color: rgba(220,236,242,.82); text-shadow: 0 4px 20px rgba(0,0,0,.4); }
+.imm-quote { position: relative; z-index: 2; margin: 0 clamp(34px, 7vw, 120px) 20px; max-width: 36rem;
+  font-family: "Noto Serif TC", serif; font-size: clamp(1.05rem, 2vw, 1.45rem); line-height: 1.85; color: var(--gold);
+  border-left: 2px solid rgba(230,200,119,.55); padding-left: 18px; text-shadow: 0 6px 28px rgba(0,0,0,.5); }
+.imm-quote cite { display: block; margin-top: 10px; font-style: normal; font-family: "Noto Sans TC", sans-serif;
+  font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.imm-rail { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  margin: 0 clamp(34px, 7vw, 120px) 88px; border-top: 1px solid rgba(230,200,119,.28); }
+.imm-rail.three { grid-template-columns: repeat(3, 1fr); }
+.imm-rail .item { padding: 16px 20px 4px 0; }
+.imm-rail .item + .item { border-left: 1px solid rgba(120,230,210,.12); padding-left: 20px; }
+.imm-rail .lab { font-size: .64rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+.imm-rail .nm { font-family: "Noto Serif TC", serif; font-size: 1.05rem; margin-bottom: 4px; }
+.imm-rail .ds { font-size: .78rem; color: var(--mute); font-weight: 300; line-height: 1.5; }
+@media (max-width: 900px) {
+  .imm-rail, .imm-rail.three { grid-template-columns: 1fr 1fr; }
+  .imm-rail .item + .item { border-left: none; padding-left: 0; }
+  .imm-rail .item { border-top: 1px solid rgba(120,230,210,.1); padding-top: 14px; }
+  .imm-rail .item:nth-child(-n+2) { border-top: none; padding-top: 16px; }
+}
+
 /* Phone */
 .phone-panel { position: relative; overflow: hidden; min-height: 360px; display: flex; flex-direction: column; padding: 24px; background: linear-gradient(165deg, #160f0a, #0a0a12 60%, #06060c) !important; }
 .phone-halo { position: absolute; left: 50%; top: 40%; transform: translate(-50%,-50%); width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(255,205,130,.32), transparent 66%); animation: halo 5.6s ease-in-out infinite; pointer-events: none; }
@@ -298,38 +334,39 @@ button, input { font: inherit; }
   </section>
 
   <!-- 03 REAL THANGKA EXHIBITION (Protagonist 1) -->
-  <section class="slide">
-    <div class="kicker">主角一 · 真跡展出</div>
-    <h2 class="s-title serif">西方寺珍藏 <em>唐卡真跡</em>，親臨其前</h2>
-    <p class="s-lead">本次展覽以西方寺珍藏的唐卡真跡實體展出為核心。每一幅唐卡都是主角，於專業佈光與禪意動線中呈現，讓訪客近距離凝視真跡的筆觸、金彩與莊嚴——這是任何數位重製都無法取代的相遇。</p>
-    <div class="two-col wide-right">
-      <ul class="points">
-        <li><strong>真跡為主體</strong> — 實體展出西方寺珍藏唐卡真跡，一切體驗圍繞真跡而生</li>
-        <li><strong>專業佈光與保護</strong> — 低照度護眼佈光、溫濕控制與安全距離，兼顧觀賞與保存</li>
-        <li><strong>一幅一境</strong> — 每幅唐卡獨立聚焦，配專屬光影氛圍，讓觀者專注凝視</li>
-        <li><strong>禪意動線</strong> — 由淺入深的觀展路徑，行進之間自然靜心</li>
-      </ul>
-      <div class="communal-stage" style="background-image:url('assets/western_k11/thangka_gallery.png');">
-        <div class="communal-veil"></div>
-        <div class="stage-cap serif">唐卡真跡 · 親臨凝視（示意）</div>
-      </div>
+  <section class="slide imm">
+    <div class="imm-bg" style="background-image:url('assets/western_k11/thangka_gallery.png');"></div>
+    <div class="imm-veil"></div>
+    <div class="imm-body">
+      <div class="kicker">主角一 · 真跡展出</div>
+      <h2 class="s-title serif">西方寺珍藏 <em>唐卡真跡</em>，親臨其前</h2>
+      <p class="s-lead">每一幅唐卡都是主角。於專業佈光與禪意動線中實體展出，讓訪客近距離凝視真跡的筆觸、金彩與莊嚴——這是任何數位重製都無法取代的相遇。</p>
+    </div>
+    <div class="imm-rail">
+      <div class="item"><div class="lab">01</div><div class="nm serif">真跡為體</div><div class="ds">西方寺珍藏唐卡真跡實體展出，一切體驗圍繞真跡而生</div></div>
+      <div class="item"><div class="lab">02</div><div class="nm serif">護光護跡</div><div class="ds">低照度佈光、溫濕控制與安全距離，兼顧觀賞與保存</div></div>
+      <div class="item"><div class="lab">03</div><div class="nm serif">一幅一境</div><div class="ds">每幅唐卡獨立聚焦，配專屬光影氛圍，讓觀者專注凝視</div></div>
+      <div class="item"><div class="lab">04</div><div class="nm serif">禪意動線</div><div class="ds">由淺入深的觀展路徑，行進之間自然靜心</div></div>
     </div>
   </section>
 
   <!-- 04 THANGKA AI VOICE GUIDE (Protagonist 2) -->
-  <section class="slide">
-    <div class="kicker">主角二 · 唐卡的聲音</div>
-    <h2 class="s-title serif">每一幅唐卡，<em>都有自己的聲音</em></h2>
-    <p class="s-lead">走到任何一幅唐卡前，以大和尚聲音打造的「唐卡 AI 語音介紹員」便會為你娓娓道來——這幅唐卡的本尊、典故、象徵與修行意涵。你更可隨時發問，它即時以大和尚的聲音回應，像有一位善知識隨行在側。</p>
-    <div class="two-col wide-left">
-      <div class="zi-stage panel" style="background-image:url('assets/western_k11/thangka_voice.png');background-size:cover;background-position:center;">
-        <div class="stage-cap serif" style="left:16px;bottom:16px;">「這幅唐卡，說的是⋯⋯」— 大和尚的聲音</div>
-      </div>
-      <div class="trio" style="grid-template-columns:1fr;margin-top:0;">
-        <div class="cell"><div class="n serif">說</div><h4 class="serif">為唐卡說法</h4><p>介紹本尊、典故、象徵與修行意涵，讓觀者看得懂、看得深。</p></div>
-        <div class="cell"><div class="n serif">問</div><h4 class="serif">隨時問答</h4><p>對唐卡有疑問？隨口一問，AI 即時以大和尚的聲音回應。</p></div>
-        <div class="cell"><div class="n serif">應</div><h4 class="serif">因人而異</h4><p>可深可淺——初訪者與修行者，都能各得其所。</p></div>
-      </div>
+  <section class="slide imm">
+    <div class="imm-bg" style="background-image:url('assets/western_k11/thangka_voice.png');"></div>
+    <div class="imm-veil voice"></div>
+    <div class="imm-body">
+      <div class="kicker">主角二 · 唐卡的聲音</div>
+      <h2 class="s-title serif">每一幅唐卡，<em>都有自己的聲音</em></h2>
+      <p class="s-lead">走到任何一幅唐卡前，以大和尚聲音打造的「唐卡 AI 語音介紹員」便會為你娓娓道來——本尊、典故、象徵與修行意涵。你更可隨時發問，它即時以大和尚的聲音回應。</p>
+    </div>
+    <blockquote class="imm-quote">
+      「這幅唐卡，說的是⋯⋯」
+      <cite>大和尚的聲音 · 唐卡 AI 語音介紹員</cite>
+    </blockquote>
+    <div class="imm-rail three">
+      <div class="item"><div class="lab">說</div><div class="nm serif">為唐卡說法</div><div class="ds">介紹本尊、典故、象徵與修行意涵，看得懂、看得深</div></div>
+      <div class="item"><div class="lab">問</div><div class="nm serif">隨時問答</div><div class="ds">對唐卡有疑問？隨口一問，即以大和尚的聲音回應</div></div>
+      <div class="item"><div class="lab">應</div><div class="nm serif">因人而異</div><div class="ds">可深可淺——初訪者與修行者，都能各得其所</div></div>
     </div>
   </section>
 
