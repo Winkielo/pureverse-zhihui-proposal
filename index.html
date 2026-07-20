@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智慧禪境 · Pureverse × 香港西方寺 · 沉浸式唐卡提案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #04080e;
+  --deep: #081420;
+  --panel: rgba(10, 22, 34, .62);
+  --line: rgba(120, 230, 210, .16);
+  --text: #eafaff;
+  --mute: rgba(200, 228, 236, .70);
+  --mint: #4fe0c0;
+  --mint-bright: #7defd0;
+  --aqua: #3aa0ff;
+  --glass: #6ec8ff;
+  --lotus: #ff8eb5;
+  --gold: #e6c877;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Noto Sans TC", sans-serif; background: var(--void); color: var(--text); overflow: hidden; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.serif { font-family: "Noto Serif TC", serif; }
+.latin { font-family: "Fraunces", Georgia, serif; letter-spacing: .02em; }
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; }
+
+#bgField { position: fixed; inset: 0; z-index: 0; }
+.bg-veil { position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(1100px 700px at 18% 8%, rgba(79,224,192,.14), transparent 58%),
+    radial-gradient(900px 620px at 84% 12%, rgba(58,160,255,.12), transparent 55%),
+    radial-gradient(800px 800px at 60% 110%, rgba(255,142,181,.08), transparent 60%),
+    linear-gradient(180deg, rgba(4,8,14,.35), rgba(4,8,14,.72)); }
+.grain { position: fixed; inset: 0; z-index: 2; pointer-events: none; opacity: .035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+.topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; padding: 16px 34px; pointer-events: none; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand img { height: 34px; width: auto; filter: drop-shadow(0 2px 10px rgba(79,224,192,.4)); }
+.brand .wm { display: flex; flex-direction: column; line-height: 1.1; }
+.brand .wm b { font-family: "Fraunces", serif; font-weight: 700; font-size: 1rem; letter-spacing: .06em; }
+.brand .wm span { font-size: .6rem; letter-spacing: .22em; text-transform: uppercase; color: var(--mute); }
+.topbar .co { font-size: .68rem; letter-spacing: .16em; color: var(--mute); text-align: right; }
+.topbar .co b { color: var(--mint-bright); font-weight: 500; }
+
+.deck { position: fixed; inset: 0; z-index: 10; }
+.slide { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; padding: 92px clamp(34px, 7vw, 120px) 96px; opacity: 0; pointer-events: none; transform: translateY(24px) scale(.992); transition: opacity .7s ease, transform .7s ease; overflow-y: auto; }
+.slide.active { opacity: 1; pointer-events: auto; transform: none; }
+.slide.prev { transform: translateY(-24px) scale(.992); }
+
+.kicker { font-size: .72rem; letter-spacing: .26em; text-transform: uppercase; color: var(--mint); margin-bottom: 16px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+.kicker::before { content: ""; width: 26px; height: 1px; background: var(--mint); display: inline-block; }
+.s-title { font-family: "Noto Serif TC", serif; font-weight: 700; line-height: 1.14; font-size: clamp(1.9rem, 4vw, 3.1rem); }
+.s-title em { font-style: normal; color: var(--mint-bright); }
+.s-lead { color: var(--mute); font-weight: 300; max-width: 46rem; margin-top: 16px; font-size: clamp(.95rem, 1.4vw, 1.08rem); }
+
+.cover { justify-content: flex-end; }
+.cover .eyebrow { font-size: .8rem; letter-spacing: .3em; text-transform: uppercase; color: var(--mint); margin-bottom: 20px; }
+.cover h1 { font-family: "Noto Serif TC", serif; font-weight: 700; font-size: clamp(3rem, 11vw, 8rem); line-height: .96; letter-spacing: .04em; text-shadow: 0 12px 60px rgba(0,0,0,.5); }
+.cover .subtitle { font-family: "Noto Serif TC", serif; font-size: clamp(1.1rem, 2.6vw, 1.8rem); color: var(--mint-bright); margin-top: 16px; font-weight: 500; letter-spacing: .06em; }
+.cover .lead { max-width: 40rem; color: var(--mute); font-weight: 300; margin-top: 20px; font-size: clamp(.95rem, 1.5vw, 1.12rem); }
+.cover .meta { display: flex; flex-wrap: wrap; gap: 26px; margin-top: 30px; font-size: .82rem; color: var(--mute); font-weight: 300; }
+.cover .meta b { color: var(--text); font-weight: 500; display: block; font-size: .95rem; margin-top: 2px; }
+.cover .meta .lab { font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; color: var(--mint); }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 44px); align-items: center; margin-top: 26px; }
+.two-col.wide-left { grid-template-columns: 1.15fr .85fr; }
+.two-col.wide-right { grid-template-columns: .85fr 1.15fr; }
+@media (max-width: 900px) { .two-col, .two-col.wide-left, .two-col.wide-right { grid-template-columns: 1fr; } }
+
+.btn { appearance: none; border: none; cursor: pointer; padding: 12px 20px; border-radius: 3px; font-size: .88rem; font-weight: 500; transition: transform .15s, background .2s, border-color .2s; }
+.btn:active { transform: scale(.97); }
+.btn-primary { background: linear-gradient(120deg, var(--mint), var(--aqua)); color: #04121a; }
+.btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+.btn-ghost:hover { border-color: var(--mint); }
+
+.formula { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 8px; }
+.formula .chip { padding: 12px 16px; background: rgba(79,224,192,.08); border: 1px solid rgba(79,224,192,.28); font-size: .9rem; }
+.formula i { color: var(--gold); font-style: normal; font-size: 1.2rem; }
+
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 26px; }
+@media (max-width: 800px) { .trio { grid-template-columns: 1fr; } }
+.trio .cell { background: var(--deep); padding: 26px 22px; }
+.trio .cell .n { font-family: "Noto Serif TC", serif; font-size: 1.9rem; color: var(--mint-bright); line-height: 1; margin-bottom: 12px; }
+.trio .cell h4 { font-family: "Noto Serif TC", serif; font-size: 1.2rem; margin-bottom: 8px; }
+.trio .cell p { color: var(--mute); font-size: .86rem; font-weight: 300; }
+
+.panel { background: var(--panel); border: 1px solid var(--line); backdrop-filter: blur(10px); }
+.points { list-style: none; display: grid; gap: 10px; }
+.points li { padding-left: 14px; border-left: 2px solid rgba(79,224,192,.5); color: var(--mute); font-size: .88rem; font-weight: 300; }
+.points strong { color: var(--text); font-weight: 500; }
+
+/* Signature: character pool */
+.zi-stage { position: relative; aspect-ratio: 1/1; max-height: 60vh; width: 100%; background: #04080e center/cover no-repeat; border: 1px solid var(--line); overflow: hidden; }
+.zi-reveal { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: "Noto Serif TC", serif; color: #fff; font-weight: 700; font-size: clamp(4rem, 16vw, 12rem); text-shadow: 0 0 40px rgba(230,200,119,.8), 0 0 80px rgba(79,224,192,.5); opacity: 0; transform: scale(.6); transition: opacity .8s, transform .8s; }
+.zi-reveal.show { opacity: 1; transform: scale(1); }
+.zi-tag { position: absolute; left: 16px; bottom: 16px; z-index: 3; font-size: .74rem; color: var(--text); background: rgba(4,8,14,.55); padding: 7px 12px; backdrop-filter: blur(6px); }
+.oracle { min-height: 120px; padding: 18px 20px; border-left: 2px solid var(--gold); background: rgba(230,200,119,.06); font-family: "Noto Serif TC", serif; font-size: 1.05rem; line-height: 1.75; }
+.oracle .who { font-family: "Noto Sans TC"; font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+
+/* Sutra sessions */
+.sutra-hero-wrap { display: none; }
+.sutra-hero { display: none; }
+.session-rail { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 18px; }
+.session { padding: 0; border: 1px solid var(--line); background: rgba(10,22,34,.5); cursor: pointer; transition: .2s; overflow: hidden; }
+.session:hover, .session.sel { border-color: var(--mint); background: rgba(79,224,192,.08); }
+.session .thumb { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; background: #04080e; }
+.session .meta { padding: 12px 12px 14px; }
+.session .t { font-size: .68rem; color: var(--gold); letter-spacing: .1em; }
+.session .n { font-family: "Noto Serif TC", serif; font-size: 1.15rem; margin: 6px 0 3px; }
+.session .d { font-size: .72rem; color: var(--mute); font-weight: 300; }
+.session-detail { margin-top: 12px; padding: 16px 20px; border: 1px solid var(--line); background: var(--panel); }
+.sd-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.sd-time { font-size: .8rem; color: var(--gold); letter-spacing: .08em; }
+.sd-name { font-size: 1.25rem; }
+.sd-theme { font-size: .9rem; color: var(--mint-bright); }
+.sd-x { color: var(--mute); font-size: .88rem; font-weight: 300; margin-top: 8px; }
+.sd-line { margin-top: 8px; font-family: "Noto Serif TC", serif; color: var(--mint-bright); font-size: 1.02rem; }
+
+/* Water mirror corridor */
+.water-stage { position: relative; aspect-ratio: 16/10; max-height: 56vh; width: 100%; border: 1px solid var(--line); overflow: hidden; background: radial-gradient(circle at 50% 30%, #0d2740, #071626 60%, #04101c); }
+.water-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; }
+.water-hud { position: absolute; left: 14px; bottom: 14px; z-index: 3; font-size: .74rem; background: rgba(4,8,14,.5); padding: 6px 10px; backdrop-filter: blur(6px); }
+
+/* Communal */
+.communal-stage { position: relative; aspect-ratio: 16/9; max-height: 54vh; width: 100%; background: url("assets/western_k11/communal_thangka.png") center/cover; border: 1px solid var(--line); overflow: hidden; }
+.communal-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4,8,14,.25), rgba(4,8,14,.65)); }
+.mandala-wrap { position: absolute; left: 50%; top: 48%; width: min(240px, 42%); aspect-ratio: 1; transform: translate(-50%,-50%); z-index: 2; }
+.petal { position: absolute; left: 50%; top: 50%; width: 34%; height: 34%; margin: -17% 0 0 -17%; border-radius: 50% 50% 50% 4px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.25); transition: background .5s, box-shadow .5s, border-color .5s; cursor: pointer; }
+.petal.filled { box-shadow: 0 0 22px currentColor; }
+.m-core { position: absolute; left: 50%; top: 50%; width: 22%; height: 22%; margin: -11% 0 0 -11%; border-radius: 50%; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.3); display: flex; align-items: center; justify-content: center; font-family: "Noto Serif TC", serif; font-size: .66rem; color: #fff; transition: all .6s; }
+.m-core.filled { box-shadow: 0 0 40px currentColor; transform: scale(1.14); }
+.stage-hud { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 3; display: flex; justify-content: space-between; gap: 10px; font-size: .74rem; }
+.stage-hud span { background: rgba(4,8,14,.5); padding: 6px 10px; backdrop-filter: blur(6px); }
+.palette { display: flex; gap: 8px; margin: 4px 0 12px; flex-wrap: wrap; }
+.swatch { width: 30px; height: 30px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; }
+.swatch.sel { border-color: #fff; transform: scale(1.12); }
+.optin { display: flex; gap: 8px; margin-bottom: 12px; }
+.optin button { flex: 1; padding: 9px; font-size: .8rem; border: 1px solid var(--line); background: transparent; color: var(--mute); cursor: pointer; }
+.optin button.sel { border-color: var(--mint); color: var(--text); background: rgba(79,224,192,.14); }
+.stage-cap { position: absolute; left: 16px; bottom: 16px; z-index: 3; font-family: "Noto Serif TC", serif; font-size: 1rem; color: #fff; background: rgba(4,8,14,.5); padding: 8px 14px; backdrop-filter: blur(6px); }
+.palette-static { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 14px 16px; border: 1px solid var(--line); background: var(--panel); }
+.palette-static .ps-lab { font-size: .78rem; color: var(--mute); }
+.palette-static .sw { width: 26px; height: 26px; border-radius: 50%; box-shadow: 0 0 14px currentColor; }
+
+/* Phone */
+.phone-panel { position: relative; overflow: hidden; min-height: 360px; display: flex; flex-direction: column; padding: 24px; background: linear-gradient(165deg, #160f0a, #0a0a12 60%, #06060c) !important; }
+.phone-halo { position: absolute; left: 50%; top: 40%; transform: translate(-50%,-50%); width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(255,205,130,.32), transparent 66%); animation: halo 5.6s ease-in-out infinite; pointer-events: none; }
+@keyframes halo { 0%,100% { opacity: .4; transform: translate(-50%,-50%) scale(.9);} 50% { opacity: .85; transform: translate(-50%,-50%) scale(1.12);} }
+.phone-icon { position: absolute; left: 50%; top: 38%; transform: translate(-50%,-50%); font-size: 4rem; z-index: 1; filter: drop-shadow(0 0 20px rgba(230,200,119,.5)); }
+.phone-cap { position: relative; z-index: 2; margin-top: auto; }
+.phone-cap .zh { font-family: "Noto Serif TC", serif; font-size: 1.15rem; color: var(--gold); }
+.phone-cap .en { font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); margin-top: 4px; }
+.line-state { font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; padding: 5px 9px; border: 1px solid rgba(79,224,192,.35); color: var(--mint-bright); display: inline-block; margin: 12px 0 4px; position: relative; z-index: 2; }
+.line-state.busy { border-color: rgba(255,142,181,.45); color: var(--lotus); }
+.phone-hero { position: relative; margin-top: 22px; padding: 44px 24px 40px; text-align: center; border: 1px solid var(--line); overflow: hidden; background: linear-gradient(165deg, #170f0a, #0a0a12 62%, #06060c); }
+.phone-hero .phone-halo { top: 0; }
+.phone-hero .phone-icon { position: static; transform: none; display: inline-block; margin-bottom: 14px; }
+.phone-quote { position: relative; z-index: 2; font-size: clamp(1.05rem, 2.1vw, 1.5rem); line-height: 1.9; color: var(--gold); border: none; margin: 0 auto; max-width: 40rem; }
+.phone-sub { position: relative; z-index: 2; margin-top: 18px; font-size: .8rem; letter-spacing: .04em; color: var(--mute); }
+
+/* Chat */
+.chat { display: flex; flex-direction: column; min-height: 360px; max-height: 56vh; }
+.chat-head { padding: 13px 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.chat-head strong { font-family: "Noto Serif TC", serif; font-size: 1.1rem; }
+.badge { font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; padding: 5px 8px; background: rgba(79,224,192,.14); color: var(--mint-bright); border: 1px solid rgba(79,224,192,.35); }
+.chat-log { flex: 1; padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.bubble { max-width: 92%; padding: 10px 13px; font-size: .88rem; font-weight: 300; animation: fade .35s ease; }
+.bubble.user { align-self: flex-end; background: rgba(58,160,255,.2); }
+.bubble.ai { align-self: flex-start; background: rgba(255,255,255,.05); border: 1px solid var(--line); }
+.bubble .who { font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mint-bright); margin-bottom: 4px; font-weight: 700; }
+@keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.prompts { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 10px; }
+.prompts button { background: transparent; border: 1px solid var(--line); color: var(--mute); padding: 6px 10px; font-size: .72rem; cursor: pointer; }
+.prompts button:hover { border-color: var(--mint); color: var(--text); }
+.chat-form { display: flex; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--line); }
+.chat-form input { flex: 1; background: rgba(0,0,0,.28); border: 1px solid var(--line); color: var(--text); padding: 10px 12px; outline: none; }
+.chat-form input:focus { border-color: var(--mint); }
+.chat-form button { background: var(--mint); color: #04121a; border: none; padding: 0 16px; cursor: pointer; }
+
+/* Venue */
+.flow-strip { display: flex; border: 1px solid var(--line); overflow: hidden; }
+.flow-zone { flex: 1; padding: 14px 6px; text-align: center; border-right: 1px solid var(--line); cursor: pointer; background: rgba(10,22,34,.4); transition: .2s; }
+.flow-zone:last-child { border-right: none; }
+.flow-zone:hover, .flow-zone.sel { background: rgba(79,224,192,.14); }
+.flow-zone .fn { font-family: "Noto Serif TC", serif; color: var(--gold); font-size: .74rem; }
+.flow-zone .fnm { font-size: .66rem; margin-top: 6px; line-height: 1.3; }
+.flow-zone .fs { font-size: .58rem; color: var(--mute); margin-top: 3px; }
+.flow-detail { margin-top: 12px; padding: 14px 18px; border: 1px solid var(--line); background: var(--panel); min-height: 74px; }
+.flow-detail h4 { font-family: "Noto Serif TC", serif; font-size: 1.05rem; margin-bottom: 5px; }
+.flow-detail p { color: var(--mute); font-size: .83rem; font-weight: 300; }
+.plan-box { margin-top: 12px; padding: 16px 18px; border: 1px dashed rgba(230,200,119,.4); background: rgba(230,200,119,.05); }
+.plan-box h4 { font-family: "Noto Serif TC", serif; font-size: 1.05rem; color: var(--gold); margin-bottom: 8px; }
+.plan-box ul { list-style: none; display: grid; gap: 6px; }
+.plan-box li { font-size: .84rem; color: var(--mute); font-weight: 300; padding-left: 14px; position: relative; }
+.plan-box li::before { content: "·"; position: absolute; left: 2px; color: var(--gold); }
+.plan-box li b { color: var(--text); font-weight: 500; }
+.calc { padding: 18px; }
+.calc h4 { font-family: "Noto Serif TC", serif; font-size: 1.05rem; margin-bottom: 4px; }
+.calc .hint { font-size: .74rem; color: var(--mute); margin-bottom: 12px; font-weight: 300; }
+.calc-mode { display: flex; gap: 8px; margin-bottom: 12px; }
+.calc-mode button { flex: 1; padding: 8px; font-size: .72rem; border: 1px solid var(--line); background: transparent; color: var(--mute); cursor: pointer; }
+.calc-mode button.sel { border-color: var(--mint); color: var(--text); background: rgba(79,224,192,.14); }
+.calc-row { margin-bottom: 10px; }
+.calc-row label { display: flex; justify-content: space-between; font-size: .78rem; color: var(--mute); margin-bottom: 5px; }
+.calc-row label b { color: var(--text); }
+.calc-row input { width: 100%; accent-color: var(--mint); }
+.calc-out { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.calc-stat { border: 1px solid var(--line); padding: 10px; text-align: center; }
+.calc-stat .v { font-family: "Noto Serif TC", serif; font-size: 1.4rem; color: var(--mint-bright); }
+.calc-stat .l { font-size: .62rem; color: var(--mute); margin-top: 4px; }
+
+/* Keepsake */
+.card-preview { display: grid; grid-template-columns: .95fr 1.05fr; gap: 0; border: 1px solid var(--line); overflow: hidden; margin-top: 8px; }
+@media (max-width: 860px) { .card-preview { grid-template-columns: 1fr; } }
+.card-face { position: relative; min-height: 300px; padding: 26px; background: linear-gradient(160deg, #081420, #14101c 60%, #1a1220); display: flex; flex-direction: column; justify-content: space-between; }
+.card-face .top { font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: var(--mint-bright); }
+.card-face .title { font-family: "Noto Serif TC", serif; font-size: 1.4rem; margin-top: 8px; }
+.card-face .big-zi { font-family: "Noto Serif TC", serif; font-size: 3.4rem; color: var(--gold); margin: 8px 0; text-shadow: 0 0 24px rgba(230,200,119,.5); }
+.card-face .bless { margin-top: auto; font-family: "Noto Serif TC", serif; font-size: .92rem; color: var(--text); border-top: 1px solid var(--line); padding-top: 12px; }
+.card-face .date { margin-top: 8px; font-size: .7rem; color: var(--mute); }
+.card-side { padding: 24px; display: flex; flex-direction: column; }
+.two-source { display: grid; gap: 8px; margin: 10px 0 16px; }
+.src { padding: 12px 14px; border: 1px solid var(--line); font-size: .84rem; color: var(--mute); font-weight: 300; }
+.src b { color: var(--text); font-weight: 500; }
+.deliver { display: flex; gap: 8px; margin-top: auto; }
+.deliver input { flex: 1; background: rgba(0,0,0,.28); border: 1px solid var(--line); color: var(--text); padding: 10px 12px; outline: none; }
+.deliver-msg { margin-top: 10px; font-size: .8rem; color: var(--mint-bright); min-height: 1.2em; }
+
+.closing { justify-content: center; text-align: center; align-items: center; }
+.closing .big { font-family: "Noto Serif TC", serif; font-size: clamp(2rem, 5vw, 3.6rem); line-height: 1.2; max-width: 24ch; }
+.closing .big em { font-style: normal; color: var(--mint-bright); }
+.closing .sign { margin-top: 28px; font-family: "Noto Serif TC", serif; font-size: 1.1rem; color: var(--gold); }
+
+.nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; padding: 18px 34px; pointer-events: none; }
+.dots { display: flex; gap: 8px; pointer-events: auto; flex-wrap: wrap; max-width: 60%; }
+.dots button { width: 9px; height: 9px; border-radius: 50%; border: none; background: rgba(200,228,236,.25); cursor: pointer; padding: 0; transition: .2s; }
+.dots button.on { background: var(--mint); transform: scale(1.3); }
+.nav-right { display: flex; align-items: center; gap: 14px; pointer-events: auto; }
+.counter { font-size: .78rem; color: var(--mute); font-variant-numeric: tabular-nums; }
+.counter b { color: var(--text); }
+.arrow { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: rgba(4,8,14,.5); color: var(--text); cursor: pointer; font-size: 1rem; transition: .2s; }
+.arrow:hover { border-color: var(--mint); background: rgba(79,224,192,.14); }
+.hint-key { position: fixed; bottom: 74px; right: 34px; z-index: 20; font-size: .68rem; color: rgba(200,228,236,.4); pointer-events: none; }
+</style>
+
+<meta name="robots" content="noindex, nofollow">
+<style>
+#authGate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#04080e;font-family:"Noto Sans TC",sans-serif}
+#authGate.hidden{display:none}
+.auth-card{width:min(420px,92vw);padding:36px 32px;border:1px solid rgba(120,230,210,.2);background:rgba(8,20,32,.95);text-align:center}
+.auth-card h2{font-family:"Noto Serif TC",serif;font-size:1.4rem;color:#eafaff;margin-bottom:8px}
+.auth-card p{font-size:.88rem;color:rgba(200,228,236,.7);margin-bottom:20px;font-weight:300}
+.auth-card input{width:100%;padding:12px 14px;border:1px solid rgba(120,230,210,.2);background:rgba(0,0,0,.35);color:#eafaff;font-size:1rem;margin-bottom:12px;outline:none}
+.auth-card input:focus{border-color:#4fe0c0}
+.auth-card button{width:100%;padding:12px;border:none;background:linear-gradient(120deg,#4fe0c0,#3aa0ff);color:#04121a;font-weight:600;font-size:.95rem;cursor:pointer}
+.auth-card .err{color:#ff8eb5;font-size:.8rem;min-height:1.2em;margin-top:10px}
+body.locked{overflow:hidden}
+body.locked .topbar,body.locked .deck,body.locked .nav,body.locked .hint-key,body.locked #bgField,body.locked .bg-veil,body.locked .grain{visibility:hidden}
+</style>
+
+</head>
+<body class="locked">
+
+<div id="authGate">
+  <div class="auth-card">
+    <h2 class="serif">智慧禪境 · 提案</h2>
+    <p>此頁僅供受邀者查閱，請輸入存取密碼。</p>
+    <input id="authInput" type="password" placeholder="請輸入密碼" autocomplete="current-password">
+    <button type="button" id="authBtn">進入提案</button>
+    <div class="err" id="authErr"></div>
+  </div>
+</div>
+
+<canvas id="bgField"></canvas>
+<div class="bg-veil"></div>
+<div class="grain"></div>
+
+<div class="topbar">
+  <div class="brand">
+    <img src="pv_logo.png" alt="Pureverse">
+    <div class="wm"><b>PUREVERSE</b><span>Immersive AI Voice</span></div>
+  </div>
+  <div class="co">香港西方寺 × Pureverse<br><b>智慧禪境 · 沉浸式唐卡提案</b></div>
+</div>
+
+<main class="deck" id="deck">
+
+  <!-- 01 COVER -->
+  <section class="slide cover active">
+    <div class="eyebrow latin">PUREVERSE × 香港西方寺</div>
+    <h1 class="serif">智慧禪境</h1>
+    <div class="subtitle serif">唐卡 · 光影 · 大和尚的聲音</div>
+    <p class="lead">
+      一場沉浸式的數位光影體驗，由 Pureverse 的 AI 語音技術驅動——
+      讓西方寺珍藏的唐卡在流動光影中甦醒，讓大和尚的聲音親自陪伴每一位訪客靜心、對話、與自己相遇。
+    </p>
+    <div class="meta">
+      <div><span class="lab">展出地點</span><b>Pureverse 自家沉浸空間 · 約 3,000 呎</b></div>
+      <div><span class="lab">預定時間</span><b>2026 年 12 月 · 建議展期兩週</b></div>
+      <div><span class="lab">開放方式</span><b>免費開放 · 分批定時入場</b></div>
+    </div>
+  </section>
+
+  <!-- 02 CONCEPT -->
+  <section class="slide">
+    <div class="kicker">核心理念</div>
+    <h2 class="s-title serif">會呼吸、會對話的<em>唐卡淨土</em></h2>
+    <p class="s-lead">我們要做的不是把唐卡掛上牆，而是把頂尖的沉浸光影，交給大和尚的聲音來貫穿全場——讓藝術、科技與信仰，融為同一場體驗。</p>
+    <div class="formula" style="margin-top:22px;">
+      <span class="chip">沉浸式光影藝術</span><i>×</i>
+      <span class="chip">大和尚的聲音（AI 語音）</span><i>×</i>
+      <span class="chip">唐卡與禪意</span>
+    </div>
+    <div class="trio">
+      <div class="cell"><div class="n serif">身</div><h4 class="serif">身入其境</h4><p>環幕、水鏡、字池光場，讓身體先走進一個令人屏息的禪意空間。</p></div>
+      <div class="cell"><div class="n serif">聲</div><h4 class="serif">聲貫全場</h4><p>大和尚的聲音貫穿始終——<b style="color:var(--text);font-weight:500;">導覽、誦經、對話、開示</b>。</p></div>
+      <div class="cell"><div class="n serif">藝</div><h4 class="serif">藝以載道</h4><p>唐卡不再只是被觀看，而是可被叩問、可被共修、可化為此刻與你相應的一個字。</p></div>
+    </div>
+  </section>
+
+  <!-- 03 SIGNATURE: CHARACTER POOL -->
+  <section class="slide">
+    <div class="kicker">簽名體驗 · 全場焦點</div>
+    <h2 class="s-title serif">字池 · <em>拈一個與你相應的字</em></h2>
+    <p class="s-lead">
+      原本的蓮花池，化為一池流動的文字——每一個字，都是一句佛經或一個佛學詞語。
+      訪客先與大和尚的聲音說說此刻的心境，輕按池畔，AI 便為你拈起一個最相應的字，
+      再由大和尚為這個字送上一段開示。這是專為 Pureverse × 西方寺打造、別處無法複製的招牌時刻。
+    </p>
+    <div class="two-col wide-left">
+      <div class="zi-stage panel" style="background-image:url('assets/western_k11/zichi.png');">
+        <div class="zi-reveal serif" id="ziReveal"></div>
+        <div class="zi-tag" id="ziTag">輕按右側，為你拈一個字</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="oracle" id="ziOracle"><div class="who">大和尚的開示</div>一池文字，皆是法語。準備好了，就讓一個字，來與你相遇。</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-primary" id="drawZi">為我拈一個字</button>
+          <button class="btn btn-ghost" id="saveZi">存為紀念卡</button>
+        </div>
+        <p style="font-size:.76rem;color:var(--mute);font-weight:300;">現場中，AI 會先以大和尚的聲音與你輕聲交談，感知你此刻的心緒，再拈出真正與你相應的字——此處為示意互動。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 SUTRA SESSIONS -->
+  <section class="slide">
+    <div class="kicker">經文場次 · 每場不同</div>
+    <h2 class="s-title serif">不同場次，<em>大和尚誦讀不同經文</em></h2>
+    <p class="s-lead">每日設五個定時場次，由大和尚的聲音誦讀不同經文，配以專屬的沉浸光影主題。訪客可依心之所向，選擇最想參與的一場。點按下方場次，了解每一場的主題。</p>
+    <div class="session-rail" id="sessionRail"></div>
+    <div class="session-detail" id="sessionDetail"></div>
+  </section>
+
+  <!-- 05 WATER MIRROR CORRIDOR -->
+  <section class="slide">
+    <div class="kicker">映水廊 · 一念一漣漪</div>
+    <h2 class="s-title serif">你的每一個動作，<em>都會在水面留下漣漪</em></h2>
+    <p class="s-lead">
+      地面與牆面連成一片流動水鏡。深度鏡頭感知每一位訪客的動作——你的每一步、每一次舉手，都會泛起漣漪；
+      當兩個人的漣漪相遇，便綻放成一朵蓮花。它讓人重新留意自己的一舉一動，也看見「一念動，眾緣共振」——你我從不孤立。
+    </p>
+    <div class="two-col wide-left">
+      <div class="water-stage">
+        <canvas id="waterCanvas"></canvas>
+        <div class="water-hud">移動滑鼠：泛起你的漣漪 · 交會處蓮花綻放</div>
+      </div>
+      <ul class="points">
+        <li><strong>一人一漣漪</strong> — 每位訪客的動作各自成波，看見自己的存在</li>
+        <li><strong>緣起共振</strong> — 漣漪交會即開蓮，體會「牽一髮而動全身」</li>
+        <li><strong>正念行走</strong> — 因為會被看見，人自然放慢、放輕、更專注當下</li>
+        <li><strong>只感知動態</strong> — 不辨識身份、不作紀錄，保障私隱</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 06 COMMUNAL -->
+  <section class="slide">
+    <div class="kicker">壓軸體驗 · 眾人同心</div>
+    <h2 class="s-title serif">同心唐卡 · <em>一起完成同一幅唐卡</em></h2>
+    <p class="s-lead">同一場次的所有人，一起上色、完成同一幅唐卡。你可以選擇加入共修，走到對應色區，為唐卡添上屬於自己的一筆；也可以只靜靜觀看。不是觀看，而是一起完成。</p>
+    <div class="two-col wide-left">
+      <div class="communal-stage">
+        <div class="communal-veil"></div>
+        <div class="stage-cap serif">同一場 · 同一幅 · 眾人同心而成</div>
+      </div>
+      <div>
+        <div class="palette-static">
+          <span class="ps-lab">色區 · 站在哪區即負責該色</span>
+          <span class="sw" style="background:#e6c877" title="金"></span>
+          <span class="sw" style="background:#d1493a" title="朱"></span>
+          <span class="sw" style="background:#3a6bd8" title="靛"></span>
+          <span class="sw" style="background:#2fae86" title="翠"></span>
+          <span class="sw" style="background:#9b6cff" title="紫"></span>
+          <span class="sw" style="background:#eafaff" title="白"></span>
+        </div>
+        <ul class="points" style="margin-top:14px;">
+          <li><strong>技術做法</strong> — 巨幅投影即時展現同一幅唐卡；地面劃分色區，肢體／位置感應偵測訪客所在區域，站在某區即為該色負責區塊上色，眾人合成於大屏幕</li>
+          <li><strong>可選參與</strong> — 選擇靜觀者，其區塊由現場其他人一同補全，不影響體驗</li>
+          <li><strong>容量</strong> — 每場約 25–30 人，配合分批入場</li>
+          <li><strong>只感知位置與靜止度</strong> — 鏡頭僅偵測所在色區與全場整體靜止度，不追蹤個人身份</li>
+          <li><strong>圓滿即成</strong> — 完成後即生成本場專屬電子唐卡，於裝置上或裝置旁掃碼領取</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 PHONE -->
+  <section class="slide">
+    <div class="kicker">大和尚的電話 · 說說你的人生</div>
+    <h2 class="s-title serif">拿起話筒，<em>放下塵事</em></h2>
+    <p class="s-lead">
+      會場一隅，設一至兩台「大和尚的電話」。只要拿起話筒，
+      就能在昏黃燈光與檀香之中，向大和尚的聲音，說一說此刻放不下的事。
+    </p>
+    <div class="phone-hero">
+      <div class="phone-halo"></div>
+      <svg class="phone-icon" width="76" height="76" viewBox="0 0 24 24" fill="none" stroke="#e6c877" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .58 3.6 1 1 0 0 1-.24 1z"/></svg>
+      <blockquote class="phone-quote serif">
+        「煩惱本是心上塵，願你說一句、放一分。<br>
+        來時攜著千斤，去時只留一念清風。」
+      </blockquote>
+      <div class="phone-sub">拿起話筒 · 一段被聆聽、被安放的時光</div>
+    </div>
+    <div class="trio" style="margin-top:20px;">
+      <div class="cell"><div class="n serif">聽</div><h4 class="serif">先被聆聽</h4><p>大和尚的聲音不急著開解，先安靜地聽你把話說完。</p></div>
+      <div class="cell"><div class="n serif">導</div><h4 class="serif">再予開示</h4><p>順著你的心事，輕輕遞上一句與佛理相應的話，如清風拂面。</p></div>
+      <div class="cell"><div class="n serif">安</div><h4 class="serif">放下而歸</h4><p>不留紀錄、不辨身份；掛上話筒，只帶走一份心安。</p></div>
+    </div>
+  </section>
+
+  <!-- 08 VENUE -->
+  <section class="slide">
+    <div class="kicker">場地規劃 · 分批入場</div>
+    <h2 class="s-title serif">3,000 呎自家空間，<em>五個分區</em></h2>
+    <p class="s-lead">全程於 Pureverse 自家沉浸空間舉行，便於長期營運與反覆調整。以下依人流動線劃分五區，並附建議的分批入場方案。</p>
+    <div class="flow-strip" id="flowStrip"></div>
+    <div class="flow-detail" id="flowDetail"></div>
+    <div class="plan-box">
+      <h4 class="serif">Pureverse 建議方案</h4>
+      <ul>
+        <li>展期：<b>建議兩週（14 天）</b></li>
+        <li>入場：<b>定時場次制</b>，每 <b>35 分鐘</b>一場，每場 <b>30 人</b>；核心體驗約 25 分鐘 + 10 分鐘換場</li>
+        <li>每日：<b>11:00–20:00</b>，約 <b>15 場</b>，日均約 <b>450 人次</b>；全期約 <b>6,000+ 人次</b></li>
+        <li>特別場：大和尚蒞臨場／開幕場人數減半至 <b>15 人</b>，確保體驗質素與互動深度</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 09 KEEPSAKE -->
+  <section class="slide">
+    <div class="kicker">帶回家的紀念</div>
+    <h2 class="s-title serif">把這份相遇，<em>化成電子紀念</em></h2>
+    <p class="s-lead">不另設紀念廊、不另做實體紀念品。你帶走的，就是體驗本身的兩份電子紀念——字池拈到的字與大和尚的開示，以及全場一起完成的那幅唐卡。<b style="color:var(--text);font-weight:500;">就在字池與同心唐卡的裝置上（或裝置旁），掃 QR 即場免費領取。</b></p>
+    <div class="card-preview">
+      <div class="card-face">
+        <div><div class="top">Pureverse × 西方寺 · 電子紀念卡</div><div class="title serif">智慧禪境 · 心之所向</div></div>
+        <div class="big-zi serif" id="cardZi">緣</div>
+        <div class="bless serif" id="cardBless">「萬事皆緣。珍惜眼前，隨緣而不攀緣。」— 大和尚</div>
+        <div class="date serif" id="cardDate" style="font-family:'Noto Sans TC';">示意 · 拈字時間隨當下生成</div>
+      </div>
+      <div class="card-side panel">
+        <h4 class="serif" style="font-size:1.05rem;">你的兩份紀念</h4>
+        <div class="two-source">
+          <div class="src">一 · 心相之字 — <b>字池</b>拈到的字與開示，於字池裝置上掃碼即取</div>
+          <div class="src">二 · 同心唐卡 — 本場<b>共修唐卡</b>電子版，於共修裝置旁掃碼即取</div>
+        </div>
+        <ul class="points" style="margin-top:16px;">
+          <li><strong>就地領取</strong> — 於原裝置即場完成</li>
+          <li><strong>免費 · 無實體</strong> — 純電子，隨時可再分享予親友</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 CLOSING -->
+  <section class="slide closing">
+    <div class="kicker" style="justify-content:center;">成果與願景</div>
+    <div class="big serif">以光影承載智慧，<br>用<em>大和尚的聲音</em>傳遞慈悲。</div>
+    <p class="s-lead" style="margin:20px auto 0;text-align:center;">
+      願每一位走進來的人，帶走一份平靜；也願西方寺看見，這份由 Pureverse AI 語音驅動的沉浸體驗，
+      值得延續——走進更多寺院、法會與生日活動，讓傳統的聲音，被更多人聽見。
+    </p>
+    <div class="sign serif">Pureverse × 香港西方寺 · 2026</div>
+  </section>
+
+</main>
+
+<nav class="nav">
+  <div class="dots" id="dots"></div>
+  <div class="nav-right">
+    <span class="counter"><b id="curNum">1</b> / <span id="totNum">10</span></span>
+    <button class="arrow" id="prevBtn" aria-label="上一頁">‹</button>
+    <button class="arrow" id="nextBtn" aria-label="下一頁">›</button>
+  </div>
+</nav>
+<div class="hint-key">← → 或空白鍵翻頁</div>
+
+<script>
+/* ---------- Deck navigation ---------- */
+const slides = Array.from(document.querySelectorAll(".slide"));
+const dotsEl = document.getElementById("dots");
+const curNum = document.getElementById("curNum");
+document.getElementById("totNum").textContent = slides.length;
+let idx = 0;
+slides.forEach((_, i) => { const b = document.createElement("button"); b.addEventListener("click", () => go(i)); dotsEl.appendChild(b); });
+const dots = Array.from(dotsEl.children);
+function go(i) {
+  i = Math.max(0, Math.min(slides.length - 1, i));
+  slides[idx].classList.remove("active");
+  slides[idx].classList.toggle("prev", i > idx);
+  idx = i;
+  slides[idx].classList.add("active");
+  slides[idx].classList.remove("prev");
+  dots.forEach((d, k) => d.classList.toggle("on", k === idx));
+  curNum.textContent = idx + 1;
+  resizers.forEach((fn) => fn());
+}
+document.getElementById("nextBtn").addEventListener("click", () => go(idx + 1));
+document.getElementById("prevBtn").addEventListener("click", () => go(idx - 1));
+addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT") return;
+  if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") { e.preventDefault(); go(idx + 1); }
+  else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); go(idx - 1); }
+  else if (e.key === "Home") go(0);
+  else if (e.key === "End") go(slides.length - 1);
+});
+dots[0].classList.add("on");
+const resizers = [];
+
+/* ---------- Background flow field ---------- */
+(function () {
+  const c = document.getElementById("bgField"); const ctx = c.getContext("2d");
+  let w, h, parts = [];
+  const COLORS = ["rgba(79,224,192,", "rgba(58,160,255,", "rgba(110,200,255,", "rgba(255,142,181,", "rgba(230,200,119,"];
+  function resize() {
+    w = c.width = innerWidth * devicePixelRatio; h = c.height = innerHeight * devicePixelRatio;
+    const n = Math.min(130, Math.floor(innerWidth / 12)); parts = [];
+    for (let i = 0; i < n; i++) parts.push({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - .5) * .25 * devicePixelRatio, vy: (Math.random() - .5) * .25 * devicePixelRatio, r: (Math.random() * 2 + .6) * devicePixelRatio, c: COLORS[i % COLORS.length], ph: Math.random() * Math.PI * 2 });
+  }
+  function tick() {
+    ctx.clearRect(0, 0, w, h);
+    parts.forEach((p) => {
+      p.x += p.vx; p.y += p.vy; p.ph += 0.01;
+      if (p.x < 0) p.x = w; if (p.x > w) p.x = 0; if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+      ctx.beginPath(); ctx.fillStyle = p.c + Math.max(0.05, 0.25 + Math.sin(p.ph) * 0.2) + ")";
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+    });
+    requestAnimationFrame(tick);
+  }
+  resize(); requestAnimationFrame(tick); addEventListener("resize", resize);
+})();
+
+/* ---------- Signature: character pool ---------- */
+const WORDS = [
+  { z: "空", o: "空，不是甚麼都沒有，而是甚麼都可能。放下執著，心就有了餘地。" },
+  { z: "緣", o: "萬事皆緣。珍惜眼前的人與事，隨緣而不攀緣。" },
+  { z: "捨", o: "捨，是給出去的智慧。願你捨下重擔，換來一身輕安。" },
+  { z: "忍", o: "忍不是壓抑，而是懂得等待花開的耐心。" },
+  { z: "定", o: "心定，則境不轉你。願你在紛擾之中，守住一方寧靜。" },
+  { z: "慧", o: "慧由定生。看清楚了，煩惱自然就少了。" },
+  { z: "慈", o: "慈，是願人快樂的心。先善待自己，再溫柔待人。" },
+  { z: "願", o: "有願就有力。把心願說出來，路自然會浮現。" },
+  { z: "覺", o: "覺，是在迷中醒來的一瞬。你肯停下來，就已在覺的路上。" },
+  { z: "安", o: "心安即是歸處。此時此地，已經足夠。" },
+  { z: "悲", o: "悲，是願人離苦。你的柔軟，正是世界需要的力量。" },
+  { z: "喜", o: "隨喜他人的好，福氣也會來到你身邊。今天，為一件小事歡喜。" },
+  { z: "靜", o: "靜，是回到自己的家。閉上眼，聽一聽呼吸。" },
+  { z: "悟", o: "悟不在遠方，就在你願意回頭的那一念。" },
+  { z: "惜", o: "懂得珍惜，平凡的日子也會發光。惜人、惜物、惜當下。" },
+  { z: "恩", o: "懂得感恩，福德自來。想一想今天值得感謝的人。" },
+  { z: "心", o: "一切由心起。照顧好這一念，世界便隨之安穩。" },
+  { z: "理", o: "理，是看清事物的本來面目。明白了，心就不亂。" },
+  { z: "真", o: "真，是不欺己、不欺人。回到真實，才得安穩。" },
+  { z: "如", o: "如，是如其本然。事情本是如此，接受它，心就寬了。" },
+  { z: "藏", o: "藏，是把善念珍藏於心。你心中有的，終會顯現。" },
+  { z: "淨", o: "淨，不是外面乾淨，而是心裡少一分塵。" },
+  { z: "法", o: "法，是指引之路。一步一步走，自有光明。" },
+  { z: "我", o: "我，不必執著於「我」。放下我執，反而更自在。" },
+  { z: "本", o: "本，是本來面目。回到根本，一切自然清楚。" },
+  { z: "照", o: "照，是以智慧照見。看清楚了，煩惱便無處藏身。" },
+  { z: "默", o: "默，是無聲的力量。安靜下來，答案自會浮現。" },
+  { z: "常", o: "常，提醒我們在無常中守住那份恆心與平常心。" },
+  { z: "體", o: "體，是親身體會。道理要走入心，才真正是你的。" },
+  { z: "一", o: "一，是一心不亂。專注當下這一念，便已足夠。" },
+  { z: "源", o: "源，是萬流之始。回到源頭，心就清澈。" },
+  { z: "無", o: "無，不是空無一物，而是放下之後的廣闊。" },
+];
+(function () {
+  const reveal = document.getElementById("ziReveal");
+  const tag = document.getElementById("ziTag");
+  const oracle = document.getElementById("ziOracle");
+  document.getElementById("drawZi").addEventListener("click", () => {
+    const pick = WORDS[Math.floor(Math.random() * WORDS.length)];
+    reveal.classList.remove("show"); void reveal.offsetWidth;
+    reveal.textContent = pick.z; reveal.classList.add("show");
+    tag.textContent = "與你相應的字 · " + pick.z;
+    oracle.innerHTML = `<div class="who">大和尚的開示</div>${pick.o}`;
+    window.curWord = pick.z; window.curWordOracle = pick.o;
+    unlock("word");
+    document.getElementById("cardZi").textContent = pick.z;
+    document.getElementById("cardBless").textContent = "「" + pick.o + "」— 大和尚";
+    document.getElementById("cardDate").textContent = "拈字時間：" + new Date().toLocaleString("zh-HK");
+  });
+  document.getElementById("saveZi").addEventListener("click", () => {
+    tag.textContent = window.curWord ? "已存入紀念卡 ✦ 見「帶回家的紀念」" : "請先拈一個字";
+  });
+})();
+
+/* ---------- Badges (internal unlock tracking) ---------- */
+const owned = new Set();
+function unlock(id) { owned.add(id); }
+
+/* ---------- Sutra sessions ---------- */
+(function () {
+  const S = [
+    { t: "10:30", n: "《心經》", d: "照見五蘊皆空", img: "assets/western_k11/sutra_panels/xinjing.png", x: "以水墨與星塵的流動，帶大家放下罣礙，體會「空」的自在。", line: "「心無罣礙，無罣礙故，無有恐怖。」" },
+    { t: "12:00", n: "《藥師經》", d: "琉璃光療癒", img: "assets/western_k11/sutra_panels/yaoshi.png", x: "滿室藍色琉璃光流轉，如溫柔的療癒，安頓身心。", line: "「願我來世得菩提時，身如琉璃，內外明徹。」" },
+    { t: "14:30", n: "《阿彌陀經》", d: "極樂淨土", img: "assets/western_k11/sutra_panels/amituo.png", x: "金光蓮池、寶樹行列，一同神遊莊嚴的極樂世界。", line: "「池中蓮華，大如車輪，微妙香潔。」" },
+    { t: "16:00", n: "《普門品》", d: "尋聲救苦", img: "assets/western_k11/sutra_panels/pumen.png", x: "柔和流光如慈悲之眼，述說觀音菩薩聞聲救苦的廣大願力。", line: "「觀世音菩薩，即時觀其音聲，皆得解脫。」" },
+    { t: "18:00", n: "《地藏經》", d: "大願安心", img: "assets/western_k11/sutra_panels/dizang.png", x: "沉靜厚重的光影，感受地藏菩薩「地獄不空」的深宏大願。", line: "「地獄不空，誓不成佛；眾生度盡，方證菩提。」" },
+  ];
+  const rail = document.getElementById("sessionRail");
+  const detail = document.getElementById("sessionDetail");
+  function render(s) {
+    detail.innerHTML = `<div class="sd-head"><span class="sd-time">${s.t}</span><span class="sd-name serif">${s.n}</span><span class="sd-theme">${s.d}</span></div>` +
+      `<p class="sd-x">${s.x}</p><p class="sd-line serif">${s.line}</p>`;
+  }
+  S.forEach((s, i) => {
+    const el = document.createElement("div");
+    el.className = "session" + (i === 0 ? " sel" : "");
+    el.innerHTML = `<img class="thumb" src="${s.img}" alt="${s.n}"><div class="meta"><div class="t">${s.t}</div><div class="n serif">${s.n}</div><div class="d">${s.d}</div></div>`;
+    el.addEventListener("click", () => { rail.querySelectorAll(".session").forEach((x) => x.classList.remove("sel")); el.classList.add("sel"); render(s); unlock("sutra"); });
+    rail.appendChild(el);
+  });
+  render(S[0]);
+})();
+
+/* ---------- Water mirror corridor ---------- */
+(function () {
+  const c = document.getElementById("waterCanvas"); const ctx = c.getContext("2d");
+  let w, h, ripples = [], lotuses = [];
+  function resize() { w = c.width = c.clientWidth * devicePixelRatio; h = c.height = c.clientHeight * devicePixelRatio; }
+  resizers.push(resize);
+  let last = null;
+  c.addEventListener("pointermove", (e) => {
+    const r = c.getBoundingClientRect();
+    const x = (e.clientX - r.left) * devicePixelRatio, y = (e.clientY - r.top) * devicePixelRatio;
+    ripples.push({ x, y, r: 4, a: 1 });
+    if (ripples.length > 30) ripples.shift();
+    if (last && Math.hypot(x - last.x, y - last.y) < 30 * devicePixelRatio && Math.random() < 0.06) lotuses.push({ x, y, r: 2, a: 1 });
+    last = { x, y };
+  });
+  function tick() {
+    ctx.clearRect(0, 0, w, h);
+    ripples.forEach((rp) => { rp.r += 2.4; rp.a *= 0.96; ctx.beginPath(); ctx.strokeStyle = `rgba(150,220,255,${rp.a * .5})`; ctx.lineWidth = 1.4 * devicePixelRatio; ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2); ctx.stroke(); });
+    ripples = ripples.filter((rp) => rp.a > 0.03);
+    lotuses.forEach((lo) => {
+      lo.r += 0.8; lo.a *= 0.985;
+      for (let k = 0; k < 8; k++) {
+        const a = (Math.PI * 2 * k) / 8;
+        ctx.beginPath(); ctx.fillStyle = `rgba(255,160,190,${lo.a * .5})`;
+        ctx.ellipse(lo.x + Math.cos(a) * lo.r * 2, lo.y + Math.sin(a) * lo.r * 2, lo.r, lo.r * 0.5, a, 0, Math.PI * 2); ctx.fill();
+      }
+    });
+    lotuses = lotuses.filter((lo) => lo.a > 0.04);
+    requestAnimationFrame(tick);
+  }
+  resize(); tick();
+})();
+
+/* ---------- Venue flow ---------- */
+(function () {
+  const ZONES = [
+    { name: "序廳・唐卡數位長廊", size: 400, detail: "走近數位化的唐卡，大和尚的聲音便輕輕響起；觀眾可發問，AI 以聲音導覽。" },
+    { name: "映水廊", size: 650, detail: "地面與牆面連成流動水鏡，每個動作泛起漣漪，交會處綻放蓮花，體會緣起共振。" },
+    { name: "字池・拈字禪", size: 550, detail: "蓮花池化為文字之池，輕按拈起一個與你相應的字，大和尚為它送上開示；紀念亦於此裝置掃碼即取。" },
+    { name: "同心唐卡・共修禪境", size: 1050, detail: "巨幅投影同一幅唐卡；訪客走進色區，肢體／位置感應即為該色上色；每場約 25–30 人，電子唐卡於此掃碼即取。" },
+    { name: "大和尚的電話", size: 350, detail: "會場一隅設一至兩台話筒，拿起即可與大和尚的聲音傾談人生。" },
+  ];
+  const strip = document.getElementById("flowStrip");
+  const detail = document.getElementById("flowDetail");
+  function render(z) { detail.innerHTML = `<h4 class="serif">${z.name}</h4><p>${z.detail}</p>`; }
+  ZONES.forEach((z, i) => {
+    const el = document.createElement("div"); el.className = "flow-zone" + (i === 0 ? " sel" : ""); el.style.flexGrow = z.size;
+    el.innerHTML = `<div class="fn">0${i + 1}</div><div class="fnm">${z.name}</div>`;
+    el.addEventListener("click", () => { strip.querySelectorAll(".flow-zone").forEach((f) => f.classList.remove("sel")); el.classList.add("sel"); render(z); });
+    strip.appendChild(el);
+  });
+  render(ZONES[0]);
+})();
+</script>
+
+<script>
+(function(){
+  const HASH="388d44c1d3d0e58a20bfe57d6cb13969a219c901d7776a2b34666e2888c4b856";
+  const KEY="pv_zhihui_auth_v1";
+  const gate=document.getElementById("authGate");
+  const input=document.getElementById("authInput");
+  const err=document.getElementById("authErr");
+  function unlock(){document.body.classList.remove("locked");gate.classList.add("hidden");sessionStorage.setItem(KEY,"1");}
+  async function sha256(t){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("");}
+  async function tryAuth(){err.textContent="";const v=(input.value||"").trim();if(!v){err.textContent="請輸入密碼";return;}if(await sha256(v)===HASH){unlock();return;}err.textContent="密碼不正確，請再試一次";}
+  document.getElementById("authBtn").addEventListener("click",tryAuth);
+  input.addEventListener("keydown",e=>{if(e.key==="Enter")tryAuth();});
+  if(sessionStorage.getItem(KEY)==="1"){unlock();}else{document.body.classList.add("locked");}
+})();
+</script>
+
+</body>
+</html>
