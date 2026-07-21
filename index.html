@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>智慧禪境 · Pureverse × 香港西方寺 · 沉浸式唐卡提案</title>
-<link rel="preload" as="image" href="assets/western_k11/web/thangka_gallery.webp" type="image/webp">
-<link rel="preload" as="image" href="assets/western_k11/web/thangka_voice.webp" type="image/webp">
-<link rel="preload" as="image" href="assets/western_k11/web/zichi.webp" type="image/webp">
-<link rel="preload" as="image" href="assets/western_k11/web/communal_thangka.webp" type="image/webp">
+<link rel="preload" as="image" href="assets/originals/hall.jpg" type="image/jpeg">
+<link rel="preload" as="image" href="assets/originals/screen.jpg" type="image/jpeg">
+<link rel="preload" as="image" href="assets/originals/lotus.jpg" type="image/jpeg">
+<link rel="preload" as="image" href="assets/originals/cube.jpg" type="image/jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
@@ -132,7 +132,7 @@ button, input { font: inherit; }
 .water-hud { position: absolute; left: 14px; bottom: 14px; z-index: 3; font-size: .74rem; background: rgba(4,8,14,.5); padding: 6px 10px; backdrop-filter: blur(6px); }
 
 /* Communal */
-.communal-stage { position: relative; aspect-ratio: 16/9; max-height: 54vh; width: 100%; background: url("assets/western_k11/web/communal_thangka.webp") center/cover; border: 1px solid var(--line); overflow: hidden; }
+.communal-stage { position: relative; aspect-ratio: 16/9; max-height: 54vh; width: 100%; background: url("assets/originals/screen.jpg") center/cover; border: 1px solid var(--line); overflow: hidden; }
 .communal-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4,8,14,.25), rgba(4,8,14,.65)); }
 .mandala-wrap { position: absolute; left: 50%; top: 48%; width: min(240px, 42%); aspect-ratio: 1; transform: translate(-50%,-50%); z-index: 2; }
 .petal { position: absolute; left: 50%; top: 50%; width: 34%; height: 34%; margin: -17% 0 0 -17%; border-radius: 50% 50% 50% 4px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.25); transition: background .5s, box-shadow .5s, border-color .5s; cursor: pointer; }
@@ -339,7 +339,7 @@ button, input { font: inherit; }
 
   <!-- 03 REAL THANGKA EXHIBITION (Protagonist 1) -->
   <section class="slide imm">
-    <div class="imm-bg" style="background-image:url('assets/western_k11/web/thangka_gallery.webp');"></div>
+    <div class="imm-bg" style="background-image:url('assets/originals/hall.jpg');"></div>
     <div class="imm-veil"></div>
     <div class="imm-body">
       <div class="kicker">主角一 · 真跡展出</div>
@@ -356,7 +356,7 @@ button, input { font: inherit; }
 
   <!-- 04 THANGKA AI VOICE GUIDE (Protagonist 2) -->
   <section class="slide imm">
-    <div class="imm-bg" style="background-image:url('assets/western_k11/web/thangka_voice.webp');"></div>
+    <div class="imm-bg" style="background-image:url('assets/originals/cube.jpg');"></div>
     <div class="imm-veil voice"></div>
     <div class="imm-body">
       <div class="kicker">主角二 · 唐卡的聲音</div>
@@ -384,7 +384,7 @@ button, input { font: inherit; }
       再由大和尚為這個字送上一段開示，讓真跡前的感動化為可帶走的一念。
     </p>
     <div class="two-col wide-left">
-      <div class="zi-stage panel" style="background-image:url('assets/western_k11/web/zichi.webp');">
+      <div class="zi-stage panel" style="background-image:url('assets/originals/lotus.jpg');">
         <div class="zi-reveal serif" id="ziReveal"></div>
         <div class="zi-tag" id="ziTag">輕按右側，為你拈一個字</div>
       </div>
@@ -586,15 +586,10 @@ const resizers = [];
 
 /* ---------- Prefetch slide images so flips feel instant ---------- */
 [
-  "assets/western_k11/web/thangka_gallery.webp",
-  "assets/western_k11/web/thangka_voice.webp",
-  "assets/western_k11/web/zichi.webp",
-  "assets/western_k11/web/communal_thangka.webp",
-  "assets/western_k11/web/sutra_panels/xinjing.jpg",
-  "assets/western_k11/web/sutra_panels/yaoshi.jpg",
-  "assets/western_k11/web/sutra_panels/amituo.jpg",
-  "assets/western_k11/web/sutra_panels/pumen.jpg",
-  "assets/western_k11/web/sutra_panels/dizang.jpg",
+  "assets/originals/hall.jpg",
+  "assets/originals/cube.jpg",
+  "assets/originals/lotus.jpg",
+  "assets/originals/screen.jpg",
 ].forEach((src) => { const i = new Image(); i.src = src; });
 
 /* ---------- Background flow field ---------- */
@@ -683,11 +678,11 @@ function unlock(id) { owned.add(id); }
 /* ---------- Sutra sessions ---------- */
 (function () {
   const S = [
-    { t: "10:30", n: "《心經》", d: "照見五蘊皆空", img: "assets/western_k11/web/sutra_panels/xinjing.jpg", x: "以水墨與星塵的流動，帶大家放下罣礙，體會「空」的自在。", line: "「心無罣礙，無罣礙故，無有恐怖。」" },
-    { t: "12:00", n: "《藥師經》", d: "琉璃光療癒", img: "assets/western_k11/web/sutra_panels/yaoshi.jpg", x: "滿室藍色琉璃光流轉，如溫柔的療癒，安頓身心。", line: "「願我來世得菩提時，身如琉璃，內外明徹。」" },
-    { t: "14:30", n: "《阿彌陀經》", d: "極樂淨土", img: "assets/western_k11/web/sutra_panels/amituo.jpg", x: "金光蓮池、寶樹行列，一同神遊莊嚴的極樂世界。", line: "「池中蓮華，大如車輪，微妙香潔。」" },
-    { t: "16:00", n: "《普門品》", d: "尋聲救苦", img: "assets/western_k11/web/sutra_panels/pumen.jpg", x: "柔和流光如慈悲之眼，述說觀音菩薩聞聲救苦的廣大願力。", line: "「觀世音菩薩，即時觀其音聲，皆得解脫。」" },
-    { t: "18:00", n: "《地藏經》", d: "大願安心", img: "assets/western_k11/web/sutra_panels/dizang.jpg", x: "沉靜厚重的光影，感受地藏菩薩「地獄不空」的深宏大願。", line: "「地獄不空，誓不成佛；眾生度盡，方證菩提。」" },
+    { t: "10:30", n: "《心經》", d: "照見五蘊皆空", img: "assets/originals/screen.jpg", x: "以水墨與星塵的流動，帶大家放下罣礙，體會「空」的自在。", line: "「心無罣礙，無罣礙故，無有恐怖。」" },
+    { t: "12:00", n: "《藥師經》", d: "琉璃光療癒", img: "assets/originals/hall.jpg", x: "滿室藍色琉璃光流轉，如溫柔的療癒，安頓身心。", line: "「願我來世得菩提時，身如琉璃，內外明徹。」" },
+    { t: "14:30", n: "《阿彌陀經》", d: "極樂淨土", img: "assets/originals/lotus.jpg", x: "金光蓮池、寶樹行列，一同神遊莊嚴的極樂世界。", line: "「池中蓮華，大如車輪，微妙香潔。」" },
+    { t: "16:00", n: "《普門品》", d: "尋聲救苦", img: "assets/originals/screen.jpg", x: "柔和流光如慈悲之眼，述說觀音菩薩聞聲救苦的廣大願力。", line: "「觀世音菩薩，即時觀其音聲，皆得解脫。」" },
+    { t: "18:00", n: "《地藏經》", d: "大願安心", img: "assets/originals/cube.jpg", x: "沉靜厚重的光影，感受地藏菩薩「地獄不空」的深宏大願。", line: "「地獄不空，誓不成佛；眾生度盡，方證菩提。」" },
   ];
   const rail = document.getElementById("sessionRail");
   const detail = document.getElementById("sessionDetail");
