@@ -8,6 +8,7 @@
 <link rel="preload" as="image" href="assets/originals/screen.jpg" type="image/jpeg">
 <link rel="preload" as="image" href="assets/originals/lotus.jpg" type="image/jpeg">
 <link rel="preload" as="image" href="assets/originals/cube.jpg" type="image/jpeg">
+<link rel="preload" as="image" href="assets/originals/water_ripple.gif" type="image/gif">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
@@ -128,7 +129,7 @@ button, input { font: inherit; }
 
 /* Water mirror corridor */
 .water-stage { position: relative; aspect-ratio: 16/10; max-height: 56vh; width: 100%; border: 1px solid var(--line); overflow: hidden; background: radial-gradient(circle at 50% 30%, #0d2740, #071626 60%, #04101c); }
-.water-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; }
+.water-stage img.water-gif { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .water-hud { position: absolute; left: 14px; bottom: 14px; z-index: 3; font-size: .74rem; background: rgba(4,8,14,.5); padding: 6px 10px; backdrop-filter: blur(6px); }
 
 /* Communal */
@@ -418,8 +419,8 @@ button, input { font: inherit; }
     </p>
     <div class="two-col wide-left">
       <div class="water-stage">
-        <canvas id="waterCanvas"></canvas>
-        <div class="water-hud">移動滑鼠：泛起你的漣漪 · 交會處蓮花綻放</div>
+        <img class="water-gif" src="assets/originals/water_ripple.gif" alt="映水廊：動作化為漣漪，交會處蓮花綻放" width="960" height="540">
+        <div class="water-hud">示意：訪客動作泛起漣漪 · 交會處蓮花綻放</div>
       </div>
       <ul class="points">
         <li><strong>一人一漣漪</strong> — 每位訪客的動作各自成波，看見自己的存在</li>
@@ -590,6 +591,7 @@ const resizers = [];
   "assets/originals/cube.jpg",
   "assets/originals/lotus.jpg",
   "assets/originals/screen.jpg",
+  "assets/originals/water_ripple.gif",
 ].forEach((src) => { const i = new Image(); i.src = src; });
 
 /* ---------- Background flow field ---------- */
@@ -700,38 +702,7 @@ function unlock(id) { owned.add(id); }
   render(S[0]);
 })();
 
-/* ---------- Water mirror corridor ---------- */
-(function () {
-  const c = document.getElementById("waterCanvas"); const ctx = c.getContext("2d");
-  let w, h, ripples = [], lotuses = [];
-  function resize() { w = c.width = c.clientWidth * devicePixelRatio; h = c.height = c.clientHeight * devicePixelRatio; }
-  resizers.push(resize);
-  let last = null;
-  c.addEventListener("pointermove", (e) => {
-    const r = c.getBoundingClientRect();
-    const x = (e.clientX - r.left) * devicePixelRatio, y = (e.clientY - r.top) * devicePixelRatio;
-    ripples.push({ x, y, r: 4, a: 1 });
-    if (ripples.length > 30) ripples.shift();
-    if (last && Math.hypot(x - last.x, y - last.y) < 30 * devicePixelRatio && Math.random() < 0.06) lotuses.push({ x, y, r: 2, a: 1 });
-    last = { x, y };
-  });
-  function tick() {
-    ctx.clearRect(0, 0, w, h);
-    ripples.forEach((rp) => { rp.r += 2.4; rp.a *= 0.96; ctx.beginPath(); ctx.strokeStyle = `rgba(150,220,255,${rp.a * .5})`; ctx.lineWidth = 1.4 * devicePixelRatio; ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2); ctx.stroke(); });
-    ripples = ripples.filter((rp) => rp.a > 0.03);
-    lotuses.forEach((lo) => {
-      lo.r += 0.8; lo.a *= 0.985;
-      for (let k = 0; k < 8; k++) {
-        const a = (Math.PI * 2 * k) / 8;
-        ctx.beginPath(); ctx.fillStyle = `rgba(255,160,190,${lo.a * .5})`;
-        ctx.ellipse(lo.x + Math.cos(a) * lo.r * 2, lo.y + Math.sin(a) * lo.r * 2, lo.r, lo.r * 0.5, a, 0, Math.PI * 2); ctx.fill();
-      }
-    });
-    lotuses = lotuses.filter((lo) => lo.a > 0.04);
-    requestAnimationFrame(tick);
-  }
-  resize(); tick();
-})();
+/* ---------- Water mirror corridor: animated GIF (no canvas) ---------- */
 
 /* ---------- Venue flow ---------- */
 (function () {
